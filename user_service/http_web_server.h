@@ -38,21 +38,49 @@ using Poco::Util::OptionSet;
 using Poco::Util::ServerApplication;
 
 #include "http_request_factory.h"
+
 #include "../database/user.h"
+
 
 class HTTPUserWebServer : public Poco::Util::ServerApplication
 {
 public:
+    HTTPUserWebServer() : _helpRequested(false)
+    {
+    }
+
+    ~HTTPUserWebServer()
+    {
+    }
+
+protected:
+    void initialize(Application &self)
+    {
+        loadConfiguration();
+        ServerApplication::initialize(self);
+    }
+
+    void uninitialize()
+    {
+        ServerApplication::uninitialize();
+    }
+
     int main([[maybe_unused]] const std::vector<std::string> &args)
     {
+        if (!_helpRequested)
+        {
             database::User::init();
+            
             ServerSocket svs(Poco::Net::SocketAddress("0.0.0.0", 8080));
             HTTPServer srv(new HTTPUserRequestFactory(DateTimeFormat::SORTABLE_FORMAT), svs, new HTTPServerParams);
             srv.start();
             waitForTerminationRequest();
             srv.stop();
-
+        }
         return Application::EXIT_OK;
     }
+
+private:
+    bool _helpRequested;
 };
 #endif // !HTTPWEBSERVER
