@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.2)
 
-project(lab04 C CXX)
+project(user_service C CXX)
 
-SET (USER_SERVICE "lab04")
+SET (USER_SERVICE "user_service")
 set (STD_CXX "c++17")
 set (REDISCPP_FLAGS "-DREDISCPP_HEADER_ONLY=ON")
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -W -Wall -std=${STD_CXX} ${REDISCPP_FLAGS}")
