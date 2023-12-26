@@ -12,6 +12,7 @@ find_package(OpenSSL)
 find_package(Threads)
 find_package(ZLIB)
 find_package(Poco REQUIRED COMPONENTS Foundation Util Net XML JSON Crypto NetSSL)
+find_package(Poco REQUIRED Foundation Data)
 
 
 if(NOT ${Poco_FOUND})
@@ -30,7 +31,7 @@ add_executable(load_data load_data.cpp)
 
 target_include_directories(${USER_SERVICE} PRIVATE "${CMAKE_BINARY_DIR}")
 target_compile_options(${USER_SERVICE} PRIVATE -Wall -Wextra -pedantic -Werror )
-
+target_link_libraries(${USER_SERVICE} PRIVATE Poco::Foundation Poco::Data)
 target_link_libraries(${USER_SERVICE} PRIVATE 
                              ${CMAKE_THREAD_LIBS_INIT} 
                              ${Poco_LIBRARIES}
