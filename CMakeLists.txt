@@ -39,7 +39,7 @@ target_link_libraries(${USER_SERVICE} PRIVATE
                              ${Poco_LIBRARIES}
                              "PocoData"
                              "PocoDataMySQL"
-                             "PocoFoundation"                   
+                             #"PocoFoundation"                   
                              ZLIB::ZLIB)
 
 
